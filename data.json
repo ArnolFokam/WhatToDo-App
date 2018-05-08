@@ -1,0 +1,22 @@
+[
+    {
+        "title": "React App",
+        "content": "create an awesome TODOList app made with react",
+        "id": "1379ea1c-b988-4330-802e-afc5e2f356d2"
+    },
+    {
+        "title": "State",
+        "content": "add more state to the add react app",
+        "id": "1379ea1c-b988-4330-802e-afc5e2f456d2"
+    },
+    {
+        "title": "Use server",
+        "content": "implement other functionalities of the server such as creat , delete , edit",
+        "id": "1379ea1c-b988-4330-802e-afc5e9f356d2"
+    },
+    {
+        "title": "final step",
+        "content": "Make some small modifiaction and paste it on github",
+        "id": "1379ea1c-b788-4330-802e-afc5e9f356d2"
+    }
+]
