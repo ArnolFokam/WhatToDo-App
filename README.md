@@ -1,6 +1,6 @@
 ### Running the app
 
-#### `step 1: Download and install Git`
+#### `step 1: Download and install Git`(optionall.it depends on if you want to clone the repository or download it.for clonnig take this step)
 
 ##### In Linux Distros (Ubuntu, Kali Linux)
 
@@ -30,7 +30,7 @@ $ sudo apt-get install npm nodejs-legacy
 Just download and install [nodeJS](https://nodejs.org/en/) (on the download page choose the LTS latest stable version ;) ).
 
  
- #### `step 3: Clone the repository`
+ #### `step 3: Clone the repository`(assuming you have git install)
 
 enter the following command on your terminal (note that the directory where you are in your terminal is the directory where the folder of the project will be download)
 
@@ -40,7 +40,7 @@ $ git clone https://github.com/ArnolFokam/WhatToDo-App.git
  
   
  
- #### `step 4: cd in the repository`
+ #### `step 4: cd in the repository` (assuming you downloaded or cloned the project folder)
 
 ```bash
 $ cd WhatToDo-App
