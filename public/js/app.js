@@ -25,7 +25,7 @@ class TaskDashboard extends React.Component {
 
 	updateTask = attrs => {
 		this.setState({
-			tasks: this.state.timers.map(task => {
+			tasks: this.state.tasks.map(task => {
 				if (task.id === attrs.id) {
 					return Object.assign({}, task, {
 						title: attrs.title,
@@ -41,15 +41,9 @@ class TaskDashboard extends React.Component {
 
 	editTaskModal = attrs => {
 		this.setState({
-			EditTask: Object.assign(
-				{},
-				{
-					title: attrs.title,
-					content: attrs.content,
-					id: attrs.id
-				}
-			)
+			EditTask: Object.assign({}, attrs)
 		});
+		this.childModalTaskForm.updateState(attrs);
 	};
 
 	resetTaskModal = () => {
@@ -62,6 +56,15 @@ class TaskDashboard extends React.Component {
 		});
 	};
 
+	handleSubmitForm = attrs => {
+		if(attrs.id == null) {
+			return
+		}
+		else{
+			this.updateTask(attrs);
+		}
+	}
+
 	render() {
 		return (
 			<div>
@@ -71,11 +74,12 @@ class TaskDashboard extends React.Component {
 					handleEditClick={this.editTaskModal}
 				/>
 				<ModalTaskForm
-					handleUpdateClick={this.UpdateTask}
+					handleSubmitForm={this.handleSubmitForm}
+					handleCreateClick={null}
 					resetTask={this.resetTaskModal}
-					title={this.state.EditTask.title}
-					content={this.state.EditTask.content}
-					id={this.state.EditTask.id}
+					ref={childModalTaskForm => {
+						this.childModalTaskForm = childModalTaskForm;
+					}}
 				/>
 			</div>
 		);
@@ -172,22 +176,18 @@ class ModalTaskForm extends React.Component {
 		id: null
 	};
 
-	onUpdateClick = () => {
-		this.props.handleUpdateClick({
-			title: this.props.title,
-			content: this.props.content,
-			id: this.props.id
-		});
-	};
+	updateState(newState) {
+		this.setState( Object.assign({}, newState));
+	}
 
 	resetTask = () => {
-		this.state = Object.assign(
+		this.setState( Object.assign(
 			{},
 			{
 				title: "",
 				content: "",
 				id: null
-			}
+			})
 		);
 		this.props.resetTask();
 	};
@@ -199,9 +199,16 @@ class ModalTaskForm extends React.Component {
 	handleContentChange = e => {
 		this.setState({ content: e.target.value });
 	};
+	submitForm = () => {
+		this.props.handleSubmitForm({
+			title: this.state.title,
+			content: this.state.content,
+			id: this.state.id
+		})
+	}
 
 	render() {
-		console.log(this.state.title);
+		console.log(this.state);
 		return (
 			<div
 				className="modal fade"
@@ -258,8 +265,8 @@ class ModalTaskForm extends React.Component {
 							>
 								Close
 							</button>
-							<button type="button" className="btn btn-primary">
-								{this.props.id == "" ? "Update" : "Create"}
+							<button type="button" className="close" data-dismiss="modal" className="btn btn-primary" onClick={this.submitForm}>
+								{this.state.id ? "Update" : "Create"}
 							</button>
 						</div>
 					</div>
