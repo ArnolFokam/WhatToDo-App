@@ -40,7 +40,7 @@ $ git clone https://github.com/ArnolFokam/WhatToDo-App.git
  
   
  
- #### `step 4: cd in the repository` (assuming you downloaded or cloned the project folder)
+ #### `step 4: cd in the repository` (assuming you downloaded or cloned the project folder and have it named as WhatToDo-App)
 
 ```bash
 $ cd WhatToDo-App
