@@ -1,6 +1,6 @@
 ### Running the app
 
-#### `step 1: Download and install Git`(optionall.it depends on if you want to clone the repository or download it.for clonnig take this step)
+#### `step 1: Download and install Git`(optional.it depends on if you want to clone the repository or download it.for clonnig take this step)
 
 ##### In Linux Distros (Ubuntu, Kali Linux)
 
