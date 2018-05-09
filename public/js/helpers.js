@@ -2,7 +2,7 @@ window.helpers = (function () {
   function newTask(attrs = {}) {
     const task = {
       title: attrs.title || 'Task',
-      content: attrs.cont || 'content',
+      content: attrs.content || 'content',
       id: uuid.v4(), // eslint-disable-line no-undef
       elapsed: 0,
     };
