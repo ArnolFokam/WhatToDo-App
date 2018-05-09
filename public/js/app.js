@@ -16,6 +16,14 @@ class TaskDashboard extends React.Component {
 		client.getTasks(serverTasks => this.setState({ tasks: serverTasks }));
 	};
 
+	createTask = task => {
+		const t = helpers.newTask(task);
+		this.setState({
+			tasks: this.state.tasks.concat(t)
+		});
+		client.createTask(t);
+	};
+
 	removeTask = taskId => {
 		this.setState({
 			tasks: this.state.tasks.filter(t => t.id !== taskId)
@@ -57,32 +65,47 @@ class TaskDashboard extends React.Component {
 	};
 
 	handleSubmitForm = attrs => {
-		if(attrs.id == null) {
-			return
-		}
-		else{
+		if (attrs.id == null) {
+			this.createTask(attrs);
+		} else {
 			this.updateTask(attrs);
 		}
-	}
+	};
 
 	render() {
-		return (
-			<div>
-				<EditableTaskList
-					tasks={this.state.tasks}
-					handleTrashClick={this.removeTask}
-					handleEditClick={this.editTaskModal}
-				/>
-				<ModalTaskForm
-					handleSubmitForm={this.handleSubmitForm}
-					handleCreateClick={null}
-					resetTask={this.resetTaskModal}
-					ref={childModalTaskForm => {
-						this.childModalTaskForm = childModalTaskForm;
-					}}
-				/>
-			</div>
-		);
+		if (this.state.tasks.length > 0) {
+			return (
+				<div>
+					<EditableTaskList
+						tasks={this.state.tasks}
+						handleTrashClick={this.removeTask}
+						handleEditClick={this.editTaskModal}
+					/>
+					<ModalTaskForm
+						handleSubmitForm={this.handleSubmitForm}
+						handleCreateClick={null}
+						resetTask={this.resetTaskModal}
+						ref={childModalTaskForm => {
+							this.childModalTaskForm = childModalTaskForm;
+						}}
+					/>
+				</div>
+			);
+		} else {
+			return (
+				<div>
+					<FloatingActionButton noTask={1} />
+					<ModalTaskForm
+						handleSubmitForm={this.handleSubmitForm}
+						handleCreateClick={null}
+						resetTask={this.resetTaskModal}
+						ref={childModalTaskForm => {
+							this.childModalTaskForm = childModalTaskForm;
+						}}
+					/>
+				</div>
+			);
+		}
 	}
 }
 
@@ -149,20 +172,36 @@ class EditableTask extends React.Component {
 }
 class FloatingActionButton extends React.Component {
 	render() {
+		var task = {
+			position: "absolute",
+			bottom: -35 + "px",
+			right: 10 + "px"
+		};
+		var noTask = {
+			position: "absolute",
+			bottom: 100 + "px",
+			right: 40 + "px"
+		};
+		var datatoggle = "data-toggle";
+		var dataplacement = "data-placement";
 		return (
-			<div
-				style={{
-					position: "absolute",
-					bottom: -35 + "px",
-					right: 10 + "px"
-				}}
-			>
+			<div style={this.props.noTask ? noTask : task}>
 				<span
-					className="fab"
-					data-toggle="modal"
-					data-target="#exampleModal"
+					{...(this.props.noTask
+						? {
+								datatoggle: "tooltip",
+								dataplacement: "left",
+								title: "Create a new task"
+						  }
+						: {})}
 				>
-					+
+					<span
+						className="fab"
+						data-toggle="modal"
+						data-target="#exampleModal"
+					>
+						+
+					</span>
 				</span>
 			</div>
 		);
@@ -177,17 +216,19 @@ class ModalTaskForm extends React.Component {
 	};
 
 	updateState(newState) {
-		this.setState( Object.assign({}, newState));
+		this.setState(Object.assign({}, newState));
 	}
 
 	resetTask = () => {
-		this.setState( Object.assign(
-			{},
-			{
-				title: "",
-				content: "",
-				id: null
-			})
+		this.setState(
+			Object.assign(
+				{},
+				{
+					title: "",
+					content: "",
+					id: null
+				}
+			)
 		);
 		this.props.resetTask();
 	};
@@ -200,15 +241,15 @@ class ModalTaskForm extends React.Component {
 		this.setState({ content: e.target.value });
 	};
 	submitForm = () => {
+		this.resetTask();
 		this.props.handleSubmitForm({
 			title: this.state.title,
 			content: this.state.content,
 			id: this.state.id
-		})
-	}
+		});
+	};
 
 	render() {
-		console.log(this.state);
 		return (
 			<div
 				className="modal fade"
@@ -265,7 +306,13 @@ class ModalTaskForm extends React.Component {
 							>
 								Close
 							</button>
-							<button type="button" className="close" data-dismiss="modal" className="btn btn-primary" onClick={this.submitForm}>
+							<button
+								type="button"
+								className="close"
+								data-dismiss="modal"
+								className="btn btn-primary"
+								onClick={this.submitForm}
+							>
 								{this.state.id ? "Update" : "Create"}
 							</button>
 						</div>

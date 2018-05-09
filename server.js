@@ -34,8 +34,7 @@ app.post('/api/tasks', (req, res) => {
     const newTask = {
       title: req.body.title,
       content: req.body.content,
-      id: req.body.id,
-      creationDate: Date.now()
+      id: req.body.id
     };
     tasks.push(newTask);
     fs.writeFile(DATA_FILE, JSON.stringify(tasks, null, 4), () => {

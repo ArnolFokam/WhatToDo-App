@@ -1,13 +1,13 @@
 window.helpers = (function () {
-  function newTimer(attrs = {}) {
-    const timer = {
-      title: attrs.title || 'Timer',
-      project: attrs.project || 'Project',
+  function newTask(attrs = {}) {
+    const task = {
+      title: attrs.title || 'Task',
+      content: attrs.cont || 'content',
       id: uuid.v4(), // eslint-disable-line no-undef
       elapsed: 0,
     };
 
-    return timer;
+    return task;
   }
 
   function findById(array, id, cb) {
@@ -17,14 +17,6 @@ window.helpers = (function () {
         return;
       }
     });
-  }
-
-  function renderElapsedString(elapsed, runningSince) {
-    let totalElapsed = elapsed;
-    if (runningSince) {
-      totalElapsed += Date.now() - runningSince;
-    }
-    return millisecondsToHuman(totalElapsed);
   }
 
   function millisecondsToHuman(ms) {
@@ -49,8 +41,7 @@ window.helpers = (function () {
 
   return {
     millisecondsToHuman,
-    newTimer,
-    findById,
-    renderElapsedString,
+    newTask,
+    findById
   };
 }());
