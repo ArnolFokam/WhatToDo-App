@@ -30,7 +30,7 @@ $ sudo apt-get install npm nodejs-legacy
 Just download and install [nodeJS](https://nodejs.org/en/) (on the download page choose the LTS latest stable version ;) ).
 
  
- #### `step 3: Clone the repository`(assuming you have git install)
+ #### `step 3: Clone the repository`(assuming you have git installed)
 
 enter the following command on your terminal (note that the directory where you are in your terminal is the directory where the folder of the project will be download)
 
